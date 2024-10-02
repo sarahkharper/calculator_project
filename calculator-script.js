@@ -35,7 +35,7 @@ and then calls one of the above functions on the numbers (based on operator)*/
 function calcOperate(operator, num1, num2){
     switch(operator) {
         case '+':
-            return calcMultiply(num1, num2);
+            return calcAdd(num1, num2);
             break;
         case '-':
             return calcSubtract(num1, num2);
