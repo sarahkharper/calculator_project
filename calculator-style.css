@@ -1,4 +1,7 @@
 /*stylesheet for calculator project*/
+body{
+    max-height: 100vh;
+}
 #container{
     display: flex;
     justify-content: center;
@@ -57,4 +60,8 @@ button{
 
 .number{
     background-color: #F8C8DC;
+}
+
+.clickColor{
+    opacity: .75;
 }

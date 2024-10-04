@@ -1,7 +1,9 @@
 //JAVASCRIPT FOR CALCULATOR PROJECT
 
-//BASIC MATH FUNCTIONS
+const btns = document.querySelectorAll('button');
+const currentDisplay = document.querySelector('#display');
 
+//BASIC MATH FUNCTIONS
 //addition function
 function calcAdd(num1, num2){
     return num1 + num2;
@@ -51,18 +53,34 @@ function calcOperate(operator, num1, num2){
     }
 }
 
+//add event listener to change button color when clicked
+btns.forEach((btn) => {
+    ['mousedown', 'mouseup'].forEach((mouseEv) => {
+        btn.addEventListener(mouseEv, ()=>{
+            btn.classList.toggle('clickColor');
+        });
+    });
+});
+
+
 //POPULATE THE DISPLAY WHEN YOU CLICK THE NUMBER BUTTONS
 //create empty array to 'store' numbers as they're added
 let displayValue = [];
-let currentDisplay = document.querySelector('#display');
 
-//add event listener to buttons to display value of clicked button on screen
-let numberBtns = document.querySelectorAll('.number'); //get all number buttons
+//add event listener to number buttons to display value of clicked button on screen
+const numberBtns = document.querySelectorAll('.number'); //get all number buttons
 numberBtns.forEach((numberBtn) => {
     numberBtn.addEventListener('click', () =>{
         displayValue.push(numberBtn.textContent);
         currentDisplay.textContent = displayValue.join('');
     });
 });
+
+//add event listener to operator buttons to store both selected operator function AND preceding number when
+//button clicked
+const opBtns = document.querySelectorAll('.operator');
+opBtns.forEach((opBtn) => {
+
+})
 
 //CHANGE BUTTON COLORS WHEN CLICKED
