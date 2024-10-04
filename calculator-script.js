@@ -50,3 +50,9 @@ function calcOperate(operator, num1, num2){
             return 'ERROR';
     }
 }
+
+//POPULATE THE DISPLAY WHEN YOU CLICK THE NUMBER BUTTONS
+//create empty array to 'store' numbers as they're added
+let 
+
+//CHANGE BUTTON COLORS WHEN CLICKED
