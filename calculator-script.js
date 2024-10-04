@@ -53,6 +53,16 @@ function calcOperate(operator, num1, num2){
 
 //POPULATE THE DISPLAY WHEN YOU CLICK THE NUMBER BUTTONS
 //create empty array to 'store' numbers as they're added
-let 
+let displayValue = [];
+let currentDisplay = document.querySelector('#display');
+
+//add event listener to buttons to display value of clicked button on screen
+let numberBtns = document.querySelectorAll('.number'); //get all number buttons
+numberBtns.forEach((numberBtn) => {
+    numberBtn.addEventListener('click', () =>{
+        displayValue.push(numberBtn.textContent);
+        currentDisplay.textContent = displayValue.join('');
+    });
+});
 
 //CHANGE BUTTON COLORS WHEN CLICKED
