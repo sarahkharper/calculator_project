@@ -35,6 +35,8 @@ let num1 = null;
 let op = null;
 //define variable for 2nd number in calculator operation
 let num2 = null;
+//define variable to hold solution of operation
+let eqs = null;
 
 /*Create OPERATE function that takes an operator and 2 numbers
 and then calls one of the above functions on the numbers (based on operator)*/
@@ -57,6 +59,58 @@ function calcOperate(operator, num1, num2){
     }
 }
 
+
+//POPULATE THE DISPLAY WHEN YOU CLICK THE NUMBER BUTTONS
+//create empty array to 'store' numbers as they're added
+let displayValue = [];
+
+//add event listener to each button to do desired action on click
+btns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+        if(btn.classList.contains('number')){
+            displayValue.push(btn.textContent);
+            updateDisplay(displayValue);
+            eqs = null;
+        };
+        if(btn.classList.contains('operator')){
+            if(num1 === null && eqs === null){
+                op = btn.textContent;
+                num1 = displayValue.join('')*1;
+                displayValue = [];
+            } else if(eqs != null) {
+                op = btn.textContent;
+                /*num2 = displayValue.join('')*1;*/
+                num1 = eqs;
+                updateDisplay(num1);
+                /*displayValue = [];
+                num2 = null;*/
+                eqs = null;
+            } else {
+                /*num2 = displayValue.join('')*1;*/
+                num1 = calcOperate(op, num1, displayValue.join('')*1);
+                op = btn.textContent;
+                updateDisplay(num1);
+                displayValue = [];
+                num2 = null;
+            }
+        }
+        if(btn.classList.contains('equals')){
+            /*num2 = displayValue.join('')*1;*/
+            eqs = calcOperate(op, num1, displayValue.join('')*1);
+            updateDisplay(eqs);
+            memClear();
+        }
+        if(btn.classList.contains('clearAll')){
+            memClear();
+            currentDisplay.textContent = '0';
+        }
+        if(btn.classList.contains('clearOne')){
+            displayValue.splice(-1,1);
+            updateDisplay(displayValue);
+        }
+    });
+});
+
 //add event listener to change button color when clicked
 btns.forEach((btn) => {
     ['mousedown', 'mouseup'].forEach((mouseEv) => {
@@ -66,12 +120,41 @@ btns.forEach((btn) => {
     });
 });
 
+//function to update display when new "active" value
+function updateDisplay(input){
+    Array.isArray(input) ? currentDisplay.textContent = checkLength(input).join('') :
+    currentDisplay.textContent = checkLength(input);
+}
 
-//POPULATE THE DISPLAY WHEN YOU CLICK THE NUMBER BUTTONS
-//create empty array to 'store' numbers as they're added
-let displayValue = [];
+//function to clear all values from active memory
+function memClear(){
+    displayValue = [];
+    num1 = null;
+    num2 = null;
+    op = null;
+}
 
-//add event listener to number buttons to display value of clicked button on screen
+//function to make sure input isn't too long for calculator display
+function checkLength(inval){
+    if ((Array.isArray(inval) && inval.join('').length <= 10) || 
+    inval.toString().length <= 10){
+        return inval;
+    }
+    if (typeof inval === "number"){
+        if(inval.toString().indexOf('.') === -1){
+            return inval.toExponential();
+        } else {
+            invalStr = inval.toString().split('.');
+            decPlaces = 9 - invalStr[0].length;
+            return Number(inval.toFixed(decPlaces));
+        }
+    } else {
+        inval.splice(-1,1);
+        return inval;
+    }
+}
+
+/*add event listener to number buttons to display value of clicked button on screen
 const numberBtns = document.querySelectorAll('.number'); //get all number buttons
 numberBtns.forEach((numberBtn) => {
     numberBtn.addEventListener('click', () =>{
@@ -83,11 +166,11 @@ numberBtns.forEach((numberBtn) => {
             currentDisplay.textContent = displayValue.join('');
         }
     });
-});
+});*/
 
 //add event listener to operator buttons to store numbers and operators, and do calculations if chaining
 //operators
-const opBtns = document.querySelectorAll('.operator');
+/*const opBtns = document.querySelectorAll('.operator');
 opBtns.forEach((opBtn) => {
     opBtn.addEventListener('click', () =>{
         if(num1 === null){
@@ -103,31 +186,29 @@ opBtns.forEach((opBtn) => {
             num2 = null;
         }
     });
-});
+});*/
 
 //add event listener to equals button to evaluate and print
-const equalsBtn = document.querySelector('.equals');
+/*const equalsBtn = document.querySelector('.equals');
 equalsBtn.addEventListener('click', () => {
     num2 = displayValue.join('')*1;
     num1 = calcOperate(op, num1, num2);
     currentDisplay.textContent = num1;
     displayValue = [];
-})
+})*/
 
 //add event listeners for "all clear" and "delete" buttons
-const acBtn = document.querySelector('#clearAll'); //delete all cached data 
+/*const acBtn = document.querySelector('#clearAll'); //delete all cached data 
 acBtn.addEventListener('click', () => {
     displayValue = [];
     num1 = null;
     op = null;
     num2 = null;
     currentDisplay.textContent = '0';
-});
+});*/
 
-const delBtn = document.querySelector('#clearOne');
+/*const delBtn = document.querySelector('#clearOne');
 delBtn.addEventListener('click', () => {
     displayValue.splice(-1,1);
     currentDisplay.textContent = displayValue.join('');
-});
-
-//CHANGE BUTTON COLORS WHEN CLICKED
+});*/
